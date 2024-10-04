@@ -1,0 +1,13 @@
+{% load static %}
+
+
+<div class="container">
+    <img src="{% static 'mihc.png' %}" alt="MiHC Logo">
+    <h1>{{ titulo }}</h1>
+    <p>{{ bajada }}</p>
+    <nav>
+        <ul>
+            <li><a href="{% url 'listado_pacientes' %}">Pacientes</a></li>
+        </ul>
+    </nav>
+</div>
