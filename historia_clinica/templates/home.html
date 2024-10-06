@@ -1,13 +1,11 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block title %}Inicio{% endblock %}
 
-
-<div class="container">
-    <img src="{% static 'mihc.png' %}" alt="MiHC Logo">
-    <h1>{{ titulo }}</h1>
-    <p>{{ bajada }}</p>
-    <nav>
-        <ul>
-            <li><a href="{% url 'listado_pacientes' %}">Pacientes</a></li>
-        </ul>
-    </nav>
-</div>
+{% block content %}
+    <div class="text-center">
+        <img src="{% static 'mihc.png' %}" alt="MiHC Logo" class="img-fluid" style="max-width: 200px;">
+        <h1>{{ titulo }}</h1>
+        <p>{{ bajada }}</p>
+    </div>
+{% endblock %}
