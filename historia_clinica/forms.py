@@ -1,5 +1,5 @@
 from django import forms
-from .models import Paciente
+from .models import Paciente, HistoriaClinica
 
 class PacienteForm(forms.ModelForm):
     class Meta:
@@ -11,3 +11,9 @@ class PacienteForm(forms.ModelForm):
             'dni': forms.NumberInput(attrs={'class': 'form-control'}),
             # Agregar más clases Bootstrap a otros campos si se desea.
         }
+
+
+class HistoriaClinicaForm(forms.ModelForm):
+    class Meta:
+        model = HistoriaClinica
+        fields = ['fecha', 'motivo', 'diagnostico', 'proxima_cita']

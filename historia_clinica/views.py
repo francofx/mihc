@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Paciente, Consulta
+from .models import Paciente, HistoriaClinica
 from django.db.models import Q  
 from django.core.paginator import Paginator
-from .forms import PacienteForm
+from .forms import PacienteForm, HistoriaClinicaForm
+
 
 def home(request):
     return render(request, 'home.html', {'titulo': 'MiHC', 'bajada': 'Mi propio sistema de control de historias clínicas'})
@@ -51,6 +52,21 @@ def detalle_paciente(request, dni):
     paciente = get_object_or_404(Paciente, dni=dni)
     consultas = Consulta.objects.filter(paciente=paciente).order_by('fecha')  # Ordenadas cronológicamente
     return render(request, 'detalle_paciente.html', {'paciente': paciente, 'consultas': consultas})
+#historias clinicas 
+def agregar_historia_clinica(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    
+    if request.method == 'POST':
+        form = HistoriaClinicaForm(request.POST)
+        if form.is_valid():
+            historia_clinica = form.save(commit=False)
+            historia_clinica.paciente = paciente
+            historia_clinica.save()
+            return redirect('listado_pacientes')  # Redirigir a la lista de pacientes
+    else:
+        form = HistoriaClinicaForm()
+    
+    return render(request, 'agregar_historia_clinica.html', {'form': form, 'paciente': paciente})
 
 # Vista de login
 def login_view(request):
