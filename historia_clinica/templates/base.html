@@ -18,9 +18,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'listado_pacientes' %}">Pacientes</a>
                     </li>
+                    {% endif %}
                     <!-- Opciones de login/logout dependiendo si el usuario está autenticado -->
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}

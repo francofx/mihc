@@ -1,0 +1,8 @@
+<!-- templates/nueva_historia.html -->
+<h2>Nueva Historia Clínica para {{ paciente.nombre }} {{ paciente.apellido }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Guardar</button>
+</form>

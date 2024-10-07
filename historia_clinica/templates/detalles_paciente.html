@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- templates/detalles_paciente.html -->
+<h2>Detalles del paciente</h2>
+
+<p><strong>Nombre:</strong> {{ paciente.nombre }} {{ paciente.apellido }}</p>
+<p><strong>DNI:</strong> {{ paciente.dni }}</p>
+<p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
+<p><strong>Obra Social:</strong> {{ paciente.obra_social }} (N° {{ paciente.numero_afiliado }})</p>
+<p><strong>Domicilio:</strong> {{ paciente.domicilio }}</p>
+<p><strong>Email:</strong> {{ paciente.email }}</p>
+<p><strong>Género:</strong> {{ paciente.genero }}</p>
+
+<hr>
+
+<h3>Historias Clínicas</h3>
+<ul>
+    {% for historia in historias_clinicas %}
+    <li>
+        <strong>Fecha:</strong> {{ historia.fecha }} <br>
+        <strong>Motivo:</strong> {{ historia.motivo }} <br>
+        <strong>Diagnóstico:</strong> {{ historia.diagnostico }} <br>
+        <strong>Próxima cita:</strong> {{ historia.proxima_cita }} <br>
+    </li>
+    <hr>
+    {% empty %}
+    <p>No hay historias clínicas registradas.</p>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'nueva_historia_clinica' paciente.id %}" class="btn btn-primary">Nueva Historia Clínica</a>
+
+{% endblock %}

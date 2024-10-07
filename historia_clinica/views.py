@@ -22,6 +22,7 @@ def agregar_paciente(request):
     return render(request, 'agregar_paciente.html', {'form': form})
 
 # Vista para editar un paciente existente
+@login_required
 def editar_paciente(request, id):
     paciente = get_object_or_404(Paciente, id=id)
     if request.method == 'POST':
@@ -47,26 +48,40 @@ def listado_pacientes(request):
 
     return render(request, 'listado_pacientes.html', {'page_obj': page_obj})
 
+#este no va mas desde que esta detalles_paciente
 @login_required
 def detalle_paciente(request, dni):
     paciente = get_object_or_404(Paciente, dni=dni)
     consultas = Consulta.objects.filter(paciente=paciente).order_by('fecha')  # Ordenadas cronológicamente
     return render(request, 'detalle_paciente.html', {'paciente': paciente, 'consultas': consultas})
+
+def detalles_paciente(request, paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    historias_clinicas = HistoriaClinica.objects.filter(paciente=paciente)
+    return render(request, 'detalles_paciente.html', {
+        'paciente': paciente,
+        'historias_clinicas': historias_clinicas
+    })
+
 #historias clinicas 
-def agregar_historia_clinica(request, paciente_id):
+@login_required
+def nueva_historia_clinica(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     
     if request.method == 'POST':
         form = HistoriaClinicaForm(request.POST)
         if form.is_valid():
-            historia_clinica = form.save(commit=False)
-            historia_clinica.paciente = paciente
-            historia_clinica.save()
-            return redirect('listado_pacientes')  # Redirigir a la lista de pacientes
+            nueva_historia = form.save(commit=False)
+            nueva_historia.paciente = paciente
+            nueva_historia.save()
+            return redirect('detalles_paciente', paciente_id=paciente.id)
     else:
         form = HistoriaClinicaForm()
     
-    return render(request, 'agregar_historia_clinica.html', {'form': form, 'paciente': paciente})
+    return render(request, 'nueva_historia.html', {
+        'form': form,
+        'paciente': paciente
+    })
 
 # Vista de login
 def login_view(request):

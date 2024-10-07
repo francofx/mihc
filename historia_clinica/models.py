@@ -24,4 +24,4 @@ class HistoriaClinica(models.Model):
     proxima_cita = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"Historia clínica de {self.paciente} - {self.fecha}"
+        return f"{self.paciente.nombre} {self.paciente.apellido} - {self.fecha}"

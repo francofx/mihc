@@ -12,7 +12,6 @@ class PacienteForm(forms.ModelForm):
             # Agregar más clases Bootstrap a otros campos si se desea.
         }
 
-
 class HistoriaClinicaForm(forms.ModelForm):
     class Meta:
         model = HistoriaClinica
